@@ -1,0 +1,20 @@
+{
+    "name": "xolmat/orm",
+    "description": "Open source orm for php",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["orm", "psr-3"],
+    "authors": [
+        {
+            "name": "Xolmat",
+            "email": "xolmatrw@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"Orm\\": "src/Orm"}
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.3.*"
+    }
+}
