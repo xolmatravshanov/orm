@@ -7,24 +7,26 @@ use PDO;
 
 class Connection implements ConnectionInterface
 {
-
     private const drivers = [
-        'mysql' => 'mysql',
-        'postgre' => 'postgre'
+        'mysql' => 'PDO_MYSQL',
+        'pgsql' => 'PDO_PGSQL',
+        'odbc' => 'PDO_ODBC',
+        'cubrid' => 'PDO_CUBRID',
+        'dblib' => 'PDO_DBLIB',
+        'firebird' => 'PDO_FIREBIRD',
+        'ibm' => 'PDO_IBM',
+        'informix' => 'PDO_INFORMIX',
+        'oci' => 'PDO_OCI',
+        'sqlite' => 'PDO_SQLITE',
+        'sqlsrv' => 'PDO_SQLSRV',
     ];
 
-    private const ports = [
-        'mysql' => 3306,
-        'postgre' => 5432,
-    ];
     /*
      * Connection TimeOut
      * */
     private $timeout = 60;
 
     private $host = '127.0.0.1';
-
-    private $port = self::ports['mysql'];
 
     private $driver = self::drivers['mysql'];
 
@@ -53,15 +55,15 @@ class Connection implements ConnectionInterface
         /*
          *  connection
          * */
-        $this->configure();
+        $this->connect();
     }
 
 
     public function addConnection(array $config)
     {
-        foreach ($config as $key => $item) {
+        foreach ($config as $key => $item)
             $this->$key = $config[$key];
-        }
+
     }
 
 
@@ -73,13 +75,14 @@ class Connection implements ConnectionInterface
 
     public function connect()
     {
+        $this->configure();
         $this->connection = new PDO($this->dsn, $this->user, $this->password);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function getConnection()
     {
-        // TODO: Implement getConnection() method.
+        return $this->connection;
     }
 
     public function disconnect()
