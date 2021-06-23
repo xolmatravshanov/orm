@@ -2,9 +2,10 @@
 
 namespace Orm;
 
+use Orm\Interfaces\BaseInterface;
 use PDO;
 
-class Base
+class Base implements BaseInterface
 {
     protected const FETCH_MODE = [
         'ASSOC' => PDO::FETCH_ASSOC,
@@ -20,6 +21,33 @@ class Base
 
     ];
 
+    public function findOne()
+    {
+        // TODO: Implement findOne() method.
+    }
 
+    public function findAll()
+    {
+        // TODO: Implement findAll() method.
+    }
+
+    public function setFetchMode()
+    {
+        // TODO: Implement setFetchMode() method.
+    }
+
+    public function setResultType()
+    {
+        // TODO: Implement setResultType() method.
+    }
+
+
+// format lash
+//
+
+// data olib kelish
+// saqlash
+// o'chirish
+// edit qilish
 
 }

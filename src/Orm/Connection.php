@@ -63,7 +63,6 @@ class Connection implements ConnectionInterface
     {
         foreach ($config as $key => $item)
             $this->$key = $config[$key];
-
     }
 
 
