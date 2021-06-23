@@ -24,17 +24,17 @@ class Connection implements ConnectionInterface
 
     private $host = '127.0.0.1';
 
-
     private $port = self::ports['mysql'];
 
     private $driver = self::drivers['mysql'];
 
     private $dbname = 'orm';
 
-    /* dns */
+    /* dsn */
     private $dsn = '';
 
     private $user = 'dbuser';
+
     private $password = 'dbpass';
 
     /*
@@ -59,27 +59,22 @@ class Connection implements ConnectionInterface
 
     public function addConnection(array $config)
     {
-        $this->password = $config['password'];
-        $this->user = $config['user'];
-        $this->dbname = $config['dbname'];
-        $this->host = $config['host'];
-        $this->driver = $config['driver'];
-
-        $this->port = $config['port'] ?? $config['port'];
+        foreach ($config as $key => $item) {
+            $this->$key = $config[$key];
+        }
     }
 
 
     public function configure()
     {
         $this->dsn = $this->driver . ':' . 'dbname=' . $this->dbname . ';' . 'host=' . $this->host;
-        $this->connection = new PDO($this->dns, $this->user, $this->password);
-
     }
 
 
     public function connect()
     {
-        $this->connection->connect();
+        $this->connection = new PDO($this->dsn, $this->user, $this->password);
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function getConnection()
@@ -89,7 +84,7 @@ class Connection implements ConnectionInterface
 
     public function disconnect()
     {
-        // TODO: Implement disconnect() method.
+        $this->connection = null;
     }
 
     public function __destruct()
